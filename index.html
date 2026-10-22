@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="bn"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>আমার হিসাব</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f1f4f0;--card:#fff;--ink:#10231f;--mute:#6b7c77;--line:#dfe6e1;--brass:#b5862e;--g:#1f8a5b;--r:#c8433b;--hero:#10231f;--herotx:#f3efe2;color-scheme:light}
+@media(prefers-color-scheme:dark){:root{--bg:#0b1412;--card:#14211e;--ink:#eef2ee;--mute:#8aa09a;--line:#23352f;--brass:#e0b04f;--g:#3cc38a;--r:#f0706a;--hero:#1b3a32;--herotx:#f3efe2;color-scheme:dark}}
+*{box-sizing:border-box;margin:0}
+body{font-family:"Hind Siliguri",system-ui,sans-serif;background:var(--bg);color:var(--ink);padding:env(safe-area-inset-top) 0 0}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none}
+[hidden]{display:none!important}
+.wrap{max-width:520px;margin:0 auto;padding:18px 16px 120px}
+h1{font-size:26px;font-weight:700}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px}
+label{display:block;font-size:13px;color:var(--mute);margin:12px 0 4px}
+input,select{width:100%;padding:12px 13px;border:1px solid var(--line);border-radius:12px;background:var(--bg);font-size:16px}
+input:focus,select:focus,button:focus-visible{outline:2px solid var(--brass);outline-offset:1px}
+.pri{width:100%;margin-top:16px;padding:13px;border-radius:12px;background:var(--brass);color:#16110a;font-weight:700;font-size:16px}
+.lnk{color:var(--brass);font-size:14px;padding:8px 0}
+.msg{font-size:14px;margin-top:10px;min-height:20px}.msg.e{color:var(--r)}.msg.g{color:var(--g)}
+.tabs{display:flex;gap:6px;background:var(--bg);padding:4px;border-radius:12px;margin-bottom:6px}
+.tabs button{flex:1;padding:9px;border-radius:9px;font-weight:600;color:var(--mute)}
+.tabs button.on{background:var(--card);color:var(--ink);box-shadow:0 1px 3px #0002}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.top small{color:var(--mute);display:block;font-size:13px}
+.hero{background:var(--hero);color:var(--herotx);border-radius:22px;padding:22px 20px}
+.hero small{opacity:.7;font-size:14px}
+.hero .big{font-size:44px;font-weight:700;line-height:1.15;color:#f1cf86;margin:2px 0 14px}
+.bar{height:8px;border-radius:8px;background:#ffffff22;overflow:hidden;display:flex}
+.bar i{display:block;height:100%}
+.two{display:flex;justify-content:space-between;margin-top:10px;font-size:14px}
+.two b{display:block;font-size:18px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
+.grid .card{padding:14px}.grid small{color:var(--mute);font-size:13px}.grid b{display:block;font-size:20px}
+h3{font-size:16px;margin:20px 0 8px}
+.row{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.row:last-child{border:0}
+.dot{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;font-weight:700;flex:none}
+.in{background:#1f8a5b22;color:var(--g)}.out{background:#c8433b22;color:var(--r)}
+.row .m{flex:1;min-width:0}.row .m b{display:block;font-weight:600}.row .m small{color:var(--mute);font-size:13px}
+.amt{font-weight:700;white-space:nowrap}.amt.in{background:none}.amt.out{background:none}
+.x{color:var(--mute);padding:6px;font-size:18px}
+.empty{color:var(--mute);text-align:center;padding:22px 0;font-size:15px}
+.prog{height:6px;background:var(--line);border-radius:6px;margin:6px 0;overflow:hidden}.prog i{display:block;height:100%;background:var(--brass)}
+.mini{padding:6px 12px;border:1px solid var(--line);border-radius:20px;font-size:13px;margin-right:6px;font-weight:600}
+nav{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);display:flex;padding:6px 8px calc(6px + env(safe-area-inset-bottom));max-width:520px;margin:0 auto}
+nav button{flex:1;padding:10px;color:var(--mute);font-weight:600}nav button.on{color:var(--brass)}
+#fab{position:fixed;right:max(16px,calc(50% - 244px));bottom:calc(76px + env(safe-area-inset-bottom));width:56px;height:56px;border-radius:50%;background:var(--brass);color:#16110a;font-size:30px;box-shadow:0 6px 18px #0004}
+#sheet{position:fixed;inset:0;background:#0007;display:flex;align-items:flex-end;justify-content:center;z-index:10}
+#sheet .box{background:var(--card);width:100%;max-width:520px;border-radius:22px 22px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom));max-height:92vh;overflow:auto}
+.seg{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.seg button{padding:10px 4px;border:1px solid var(--line);border-radius:12px;font-weight:600;font-size:14px}
+.seg button.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips button{padding:7px 12px;border:1px solid var(--line);border-radius:20px;font-size:14px}
+.chips button.on{background:var(--brass);color:#16110a;border-color:var(--brass)}
+@media(prefers-reduced-motion:no-preference){#sheet .box{animation:up .22s ease-out}@keyframes up{from{transform:translateY(40px);opacity:0}}}
+</style></head><body>
+
+<div id="boot" class="wrap"><p class="empty">লোড হচ্ছে…</p></div>
+
+<div id="auth" class="wrap" hidden>
+  <h1 style="margin:30px 0 4px">আমার হিসাব</h1>
+  <p style="color:var(--mute);margin-bottom:18px">আয়, খরচ, পাওনা ও দেনা এক জায়গায়।</p>
+  <div class="card">
+    <div class="tabs" id="atabs"><button class="on" data-m="in">লগইন</button><button data-m="up">নতুন অ্যাকাউন্ট</button></div>
+    <label>ইমেইল</label><input id="em" type="email" autocomplete="email" autocapitalize="off" placeholder="name@gmail.com">
+    <label>পাসওয়ার্ড</label><input id="pw" type="password" autocomplete="current-password" placeholder="কমপক্ষে ৬ অক্ষর">
+    <button class="pri" id="go">লগইন করো</button>
+    <div class="msg" id="am"></div>
+    <button class="lnk" id="fg">পাসওয়ার্ড ভুলে গেছ?</button>
+  </div>
+</div>
+
+<div id="app" hidden>
+  <div class="wrap">
+    <div class="top"><div><h1>আমার হিসাব</h1><small id="who"></small></div><button class="lnk" id="lo">বের হও</button></div>
+    <div id="main"></div>
+  </div>
+  <button id="fab" aria-label="নতুন যোগ করো">+</button>
+  <nav><button data-t="home" class="on">হোম</button><button data-t="tx">লেনদেন</button><button data-t="debt">পাওনা-দেনা</button></nav>
+</div>
+
+<div id="sheet" hidden><div class="box">
+  <div class="seg" id="seg"><button data-k="out" class="on">খরচ</button><button data-k="in">আয়</button><button data-k="get">পাওনা</button><button data-k="give">দেনা</button></div>
+  <label>টাকার পরিমাণ</label><input id="f_amt" type="number" inputmode="decimal" placeholder="০">
+  <div id="w_name"><label id="l_name">কার কাছ থেকে / কাকে</label><input id="f_name" placeholder="নাম"></div>
+  <div id="w_cat"><label>ধরন</label><div class="chips" id="chips"></div></div>
+  <label id="l_date">তারিখ</label><input id="f_date" type="date">
+  <label>নোট (ঐচ্ছিক)</label><input id="f_note" placeholder="যেমন: দুপুরের খাবার">
+  <button class="pri" id="save">সেভ করো</button>
+  <div class="msg e" id="sm"></div>
+  <button class="lnk" id="cancel" style="width:100%">বন্ধ করো</button>
+</div></div>
+
+<script type="module">
+import {initializeApp} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+import {getAuth,onAuthStateChanged,createUserWithEmailAndPassword,signInWithEmailAndPassword,signOut,sendPasswordResetEmail} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+import {getFirestore,collection,addDoc,deleteDoc,updateDoc,doc,onSnapshot} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+const cfg=__CFG__;
+const app=initializeApp(cfg),auth=getAuth(app),db=getFirestore(app);
+const $=id=>document.getElementById(id);
+const bn=n=>Number(n).toLocaleString("bn-BD");
+const tk=n=>"৳"+bn(Math.round(n));
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const today=()=>{const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")};
+const fd=s=>s?new Date(s+"T00:00").toLocaleDateString("bn-BD",{day:"numeric",month:"short"}):"";
+const CATS={out:["খাবার","বাজার","যাতায়াত","বিল","শিক্ষা","চিকিৎসা","বিনোদন","অন্যান্য"],in:["বেতন","ব্যবসা","উপহার","অন্যান্য"]};
+const ERR={"auth/invalid-credential":"ইমেইল বা পাসওয়ার্ড ঠিক নেই।","auth/email-already-in-use":"এই ইমেইলে আগেই অ্যাকাউন্ট আছে। লগইন করো।","auth/weak-password":"পাসওয়ার্ড কমপক্ষে ৬ অক্ষর দাও।","auth/invalid-email":"ইমেইল সঠিক নয়।","auth/too-many-requests":"অনেকবার চেষ্টা হয়েছে। একটু পরে আবার করো।"};
+let uid=null,tx=[],debts=[],tab="home",mode="in",kind="out",cat="খাবার",unsubs=[];
+
+/* ---------- Auth ---------- */
+const amsg=(t,ok)=>{$("am").className="msg "+(ok?"g":"e");$("am").textContent=t};
+document.querySelectorAll("#atabs button").forEach(b=>b.onclick=()=>{mode=b.dataset.m;document.querySelectorAll("#atabs button").forEach(x=>x.classList.toggle("on",x===b));$("go").textContent=mode==="up"?"অ্যাকাউন্ট খোলো":"লগইন করো";$("pw").autocomplete=mode==="up"?"new-password":"current-password";amsg("")});
+$("go").onclick=async()=>{
+  const e=$("em").value.trim(),p=$("pw").value;
+  if(!e||!p){amsg("ইমেইল ও পাসওয়ার্ড দাও।");return}
+  $("go").disabled=true;amsg("");
+  try{mode==="up"?await createUserWithEmailAndPassword(auth,e,p):await signInWithEmailAndPassword(auth,e,p)}
+  catch(x){amsg(ERR[x.code]||"সমস্যা: "+x.code)}
+  $("go").disabled=false;
+};
+$("fg").onclick=async()=>{
+  const e=$("em").value.trim();if(!e){amsg("উপরে ইমেইল লিখে আবার চাপো।");return}
+  try{await sendPasswordResetEmail(auth,e)}catch(x){if(x.code==="auth/invalid-email"){amsg(ERR[x.code]);return}}
+  amsg("ইমেইলটি নিবন্ধিত থাকলে রিসেট লিংক পাঠানো হয়েছে। Spam ফোল্ডারও দেখো।",true);
+};
+$("lo").onclick=()=>signOut(auth);
+const show=id=>["boot","auth","app"].forEach(x=>$(x).hidden=x!==id);
+
+onAuthStateChanged(auth,u=>{
+  unsubs.forEach(f=>f());unsubs=[];
+  if(!u){uid=null;show("auth");return}
+  uid=u.uid;$("who").textContent=u.email;show("app");
+  const sort=a=>a.sort((x,y)=>(y.date||"").localeCompare(x.date||"")||(y.ts||0)-(x.ts||0));
+  unsubs.push(onSnapshot(collection(db,"hisab",uid,"tx"),s=>{tx=sort(s.docs.map(d=>({id:d.id,...d.data()})));render()},()=>{}));
+  unsubs.push(onSnapshot(collection(db,"hisab",uid,"debts"),s=>{debts=sort(s.docs.map(d=>({id:d.id,...d.data()})));render()},()=>{}));
+});
+
+/* ---------- Views ---------- */
+const sum=(a,f)=>a.reduce((s,x)=>s+(+x.amt||0),0);
+function txRow(t){return `<div class="row"><div class="dot ${t.type}">${t.type==="in"?"+":"−"}</div><div class="m"><b>${esc(t.cat)}</b><small>${fd(t.date)}${t.note?" · "+esc(t.note):""}</small></div><div class="amt" style="color:var(--${t.type==="in"?"g":"r"})">${tk(t.amt)}</div><button class="x" data-del="tx:${t.id}" aria-label="মুছে ফেলো">×</button></div>`}
+function debtRow(d){
+  const left=Math.max(0,d.amt-(d.paid||0)),pc=Math.min(100,(d.paid||0)/d.amt*100);
+  return `<div class="row" style="align-items:flex-start"><div class="m"><b>${esc(d.name)}</b><small>${d.due?"শেষ তারিখ "+fd(d.due)+" · ":""}মোট ${tk(d.amt)}${d.note?" · "+esc(d.note):""}</small><div class="prog"><i style="width:${pc}%"></i></div>${left>0?`<button class="mini" data-pay="${d.id}">${d.kind==="get"?"টাকা পেলাম":"টাকা দিলাম"}</button>`:`<small style="color:var(--g)">সম্পূর্ণ শোধ ✓</small>`}</div><div style="text-align:right"><div class="amt" style="color:var(--${d.kind==="get"?"g":"r"})">${tk(left)}</div><small style="color:var(--mute)">বাকি</small><br><button class="x" data-del="debts:${d.id}" aria-label="মুছে ফেলো">×</button></div></div>`;
+}
+function render(){
+  const m=$("main"),ym=today().slice(0,7);
+  const inc=sum(tx.filter(t=>t.type==="in")),exp=sum(tx.filter(t=>t.type==="out"));
+  if(tab==="home"){
+    const mi=sum(tx.filter(t=>t.type==="in"&&t.date?.startsWith(ym))),me=sum(tx.filter(t=>t.type==="out"&&t.date?.startsWith(ym)));
+    const get=debts.filter(d=>d.kind==="get").reduce((s,d)=>s+d.amt-(d.paid||0),0),give=debts.filter(d=>d.kind==="give").reduce((s,d)=>s+d.amt-(d.paid||0),0);
+    const tot=mi+me||1;
+    m.innerHTML=`<div class="hero"><small>বর্তমান ব্যালেন্স</small><div class="big">${tk(inc-exp)}</div>
+      <div class="bar"><i style="width:${mi/tot*100}%;background:#6fd6a4"></i><i style="width:${me/tot*100}%;background:#f0877f"></i></div>
+      <div class="two"><span><small>এই মাসের আয়</small><b>${tk(mi)}</b></span><span style="text-align:right"><small>এই মাসের খরচ</small><b>${tk(me)}</b></span></div></div>
+      <div class="grid"><div class="card"><small>মোট পাওনা</small><b style="color:var(--g)">${tk(get)}</b></div><div class="card"><small>মোট দেনা</small><b style="color:var(--r)">${tk(give)}</b></div></div>
+      <h3>সাম্প্রতিক লেনদেন</h3><div class="card">${tx.slice(0,5).map(txRow).join("")||`<p class="empty">এখনো কিছু নেই। নিচের + চেপে প্রথম হিসাব যোগ করো।</p>`}</div>`;
+  }else if(tab==="tx"){
+    m.innerHTML=`<div class="card">${tx.map(txRow).join("")||`<p class="empty">কোনো লেনদেন নেই।</p>`}</div>`;
+  }else{
+    const g=debts.filter(d=>d.kind==="get"),v=debts.filter(d=>d.kind==="give");
+    m.innerHTML=`<h3 style="margin-top:0">পাওনা (আমি পাব)</h3><div class="card">${g.map(debtRow).join("")||`<p class="empty">কেউ তোমার কাছে ঋণী নয়।</p>`}</div><h3>দেনা (আমি দেব)</h3><div class="card">${v.map(debtRow).join("")||`<p class="empty">তোমার কোনো দেনা নেই।</p>`}</div>`;
+  }
+}
+document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>{tab=b.dataset.t;document.querySelectorAll("nav button").forEach(x=>x.classList.toggle("on",x===b));render()});
+$("main").onclick=async e=>{
+  const d=e.target.closest("[data-del]"),p=e.target.closest("[data-pay]");
+  if(d){const[c,id]=d.dataset.del.split(":");if(confirm("এটি মুছে ফেলবে?"))await deleteDoc(doc(db,"hisab",uid,c,id))}
+  if(p){const x=debts.find(y=>y.id===p.dataset.pay),left=x.amt-(x.paid||0);
+    const v=parseFloat(prompt((x.kind==="get"?"কত টাকা পেয়েছ?":"কত টাকা দিয়েছ?")+" (বাকি "+left+")",left));
+    if(v>0)await updateDoc(doc(db,"hisab",uid,"debts",x.id),{paid:Math.min(x.amt,(x.paid||0)+v)})}
+};
+
+/* ---------- Add sheet ---------- */
+function setKind(k){
+  kind=k;document.querySelectorAll("#seg button").forEach(b=>b.classList.toggle("on",b.dataset.k===k));
+  const dbt=k==="get"||k==="give";
+  $("w_name").hidden=!dbt;$("w_cat").hidden=dbt;
+  $("l_name").textContent=k==="get"?"কার কাছ থেকে পাবে":"কাকে দেবে";
+  $("l_date").textContent=dbt?"শেষ তারিখ (ঐচ্ছিক)":"তারিখ";
+  $("f_date").value=dbt?"":today();
+  if(!dbt){cat=CATS[k][0];$("chips").innerHTML=CATS[k].map((c,i)=>`<button data-c="${c}" class="${i?"":"on"}">${c}</button>`).join("")}
+}
+$("chips").onclick=e=>{const b=e.target.closest("[data-c]");if(!b)return;cat=b.dataset.c;document.querySelectorAll("#chips button").forEach(x=>x.classList.toggle("on",x===b))};
+$("seg").onclick=e=>{const b=e.target.closest("[data-k]");if(b)setKind(b.dataset.k)};
+$("fab").onclick=()=>{["f_amt","f_name","f_note"].forEach(i=>$(i).value="");$("sm").textContent="";setKind("out");$("sheet").hidden=false;$("f_amt").focus()};
+$("cancel").onclick=()=>$("sheet").hidden=true;
+$("sheet").onclick=e=>{if(e.target===$("sheet"))$("sheet").hidden=true};
+$("save").onclick=async()=>{
+  const amt=parseFloat($("f_amt").value),note=$("f_note").value.trim(),date=$("f_date").value,dbt=kind==="get"||kind==="give",name=$("f_name").value.trim();
+  if(!(amt>0)){$("sm").textContent="টাকার পরিমাণ দাও।";return}
+  if(dbt&&!name){$("sm").textContent="নাম লেখো।";return}
+  $("save").disabled=true;
+  try{
+    if(dbt)await addDoc(collection(db,"hisab",uid,"debts"),{kind,name,amt,paid:0,due:date,note,date:today(),ts:Date.now()});
+    else await addDoc(collection(db,"hisab",uid,"tx"),{type:kind,cat,amt,note,date:date||today(),ts:Date.now()});
+    $("sheet").hidden=true;
+  }catch(x){$("sm").textContent="সেভ হয়নি। ইন্টারনেট ও Firestore Rules দেখো।"}
+  $("save").disabled=false;
+};
+</script></body></html>
